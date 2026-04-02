@@ -1,0 +1,29 @@
+{
+  "name": "paylocity-playwright-framework",
+  "version": "1.0.0",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "playwright test",
+    "test:ui": "playwright test src/ui/tests",
+    "test:api": "playwright test src/api/tests",
+    "test:debug": "playwright test --debug",
+    "test:ui:debug": "playwright test src/ui/tests --debug --headed",
+    "test:headed": "playwright test --headed",
+    "test:report": "playwright test --reporter=html && playwright show-report",
+    "test:ci": "playwright test --reporter=junit"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@playwright/test": "^1.59.1",
+    "@types/node": "^25.5.0"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.0"
+  }
+}
