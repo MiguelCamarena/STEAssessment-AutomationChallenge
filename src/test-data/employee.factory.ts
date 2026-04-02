@@ -1,3 +1,4 @@
+// Factory function to build test employee data
 export function buildEmployee(overrides = {}) {
   const timestamp = Date.now();
   const random = Math.floor(Math.random() * 1000);

@@ -1,3 +1,4 @@
+// Test data for employees
 export const employeeData = {
   validEmployee: {
     firstName: 'Mike',
@@ -13,6 +14,7 @@ export const employeeData = {
   },
 };
 
+// Test data for login
 export const loginData = {
   validLogin: {
     page: 'Benefits',

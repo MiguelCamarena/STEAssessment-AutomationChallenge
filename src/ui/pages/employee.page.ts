@@ -1,6 +1,7 @@
 import { Page, Locator, expect } from '@playwright/test';
 
 export class EmployeePage {
+  // Page locators
   readonly page: Page;
   readonly addButton: Locator;
   readonly modal: Locator;
@@ -10,6 +11,7 @@ export class EmployeePage {
   readonly addEmployeeButton: Locator;
   readonly updateEmployeeButton: Locator;
 
+  // Constructor for EmployeePage
   constructor(page: Page) {
     this.page = page;
     this.addButton = page.locator('#add');

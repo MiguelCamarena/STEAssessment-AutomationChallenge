@@ -6,6 +6,7 @@ type Fixtures = {
 };
 
 export const test = base.extend<Fixtures>({
+  // Fixture to provide a logged-in page
   loggedInPage: async ({ page }, use) => {
     const login = new LoginPage(page);
     await page.goto(process.env.LOGIN_URL);

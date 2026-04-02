@@ -4,6 +4,7 @@ import { EmployeeClient } from '../clients/employee.client';
 import { EmployeeService } from '../services/employee.service';
 import { buildEmployee } from '../../test-data/employee.factory';
 
+// Test to get employees via API
 test('Get employees API', async () => {
   const api = await getApiContext();
   const client = new EmployeeClient(api);
@@ -21,6 +22,7 @@ test('Get employees API', async () => {
   expect(employee).toHaveProperty('lastName');
 });
 
+// Test to create employee via API
 test('Create employees API', async () => {
   const api = await getApiContext();
   const client = new EmployeeClient(api);
