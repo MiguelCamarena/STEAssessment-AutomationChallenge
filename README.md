@@ -14,6 +14,7 @@ This project demonstrates a clean and maintainable architecture using:
 
 ## 📂 Project Structure
 
+```bash
 .
 ├── src
 │   ├── api
@@ -35,8 +36,7 @@ This project demonstrates a clean and maintainable architecture using:
 ├── playwright.config.ts   # Global config
 ├── .env                   # Environment variables
 └── README.md
-
----
+```
 
 ## 🧠 Architecture Overview
 
