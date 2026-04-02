@@ -13,7 +13,11 @@
     "test:ui:debug": "playwright test src/ui/tests --debug --headed",
     "test:headed": "playwright test --headed",
     "test:report": "playwright test --reporter=html && playwright show-report",
-    "test:ci": "playwright test --reporter=junit"
+    "test:ci": "playwright test --reporter=junit",
+    "test:allure": "playwright test",
+    "allure:generate": "allure generate ./allure-results --clean",
+    "allure:open": "allure open ./allure-report",
+    "allure:report": "npm run test:allure && npm run allure:generate && npm run allure:open"
   },
   "keywords": [],
   "author": "",
@@ -21,7 +25,9 @@
   "description": "",
   "devDependencies": {
     "@playwright/test": "^1.59.1",
-    "@types/node": "^25.5.0"
+    "@types/node": "^25.5.0",
+    "allure-commandline": "^2.38.1",
+    "allure-playwright": "^3.6.0"
   },
   "dependencies": {
     "dotenv": "^17.4.0"

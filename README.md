@@ -1,216 +1,257 @@
-# Paylocity Playwright Framework
+# 🚀 Paylocity Playwright Framework
 
-This repository contains a Playwright test framework for a Paylocity Benefits demo application. It includes UI tests for login and employee modal flows, and API tests for employee endpoints.
+End-to-end test automation framework built with Playwright + TypeScript, designed using scalable patterns for UI and API testing.
 
-## Project structure
+This project demonstrates a clean and maintainable architecture using:
+- Page Object Model (POM)
+- API Client/Service layers
+- Test data factories
+- Custom fixtures for authentication
+- Allure reporting
+- CI/CD pipeline with GitHub Actions
 
-- `src/ui/` - UI page objects, tests, and flows
-  - `src/ui/pages` - Page Object Models (LoginPage, EmployeePage)
-  - `src/ui/tests` - UI test specs (`login.spec.ts`, `employee.add.spec.ts`) 
-- `src/api/` - API client and service layers plus API tests
-  - `src/api/clients` - low-level request wrappers
-  - `src/api/services` - business logic around API responses
-  - `src/api/tests` - API contract tests (`employee.api.spec.ts`)
-- `src/fixtures` - fixture definitions for auth and shared test setup
-- `src/test-data` - test data capabilities and factories (`employee.factory.ts`)
-- `test-results` - generated test artifacts (screenshots, video, error contexts)
-- `playwright.config.ts` - Playwright configuration.
+---
 
-## Setup
+## 📂 Project Structure
 
-1. Ensure Node.js 18+ is installed.
-2. Install dependencies:
+.
+├── src
+│   ├── api
+│   │   ├── clients        # Low-level HTTP requests
+│   │   ├── services       # Business logic layer
+│   │   └── tests          # API test specs
+│   │
+│   ├── ui
+│   │   ├── pages          # Page Object Models
+│   │   ├── components     # Reusable UI components
+│   │   ├── flows          # Business flows
+│   │   └── tests          # UI test specs
+│   │
+│   ├── fixtures           # Custom Playwright fixtures
+│   ├── test-data          # Static data + factories
+│   └── utils              # Shared utilities
+│
+├── test-results           # Screenshots, videos, traces
+├── playwright.config.ts   # Global config
+├── .env                   # Environment variables
+└── README.md
 
-```bash
-npm install
-npx playwright install
-```
+---
 
-3. Add environment variables (`.env`):
+## 🧠 Architecture Overview
 
-```env
-BASE_URL="https://wmxrwq14uc.execute-api.us-east-1.amazonaws.com/Prod/api/Employees"
-USER="TestUser943"
-PASSWORD="+dB3deG/Z3]a"
-AUTH_TOKEN="Basic VGVzdFVzZXI5NDM6K2RCM2RlRy9aM11h"  
-LOGIN_URL="https://wmxrwq14uc.execute-api.us-east-1.amazonaws.com/Prod/Account/LogIn"
-```
+### UI Layer
+- Pages → encapsulate locators and actions  
+- Components → reusable UI elements  
+- Flows → business-level interactions  
 
-> Adjust values to your environment.
+Example:
+await employeeFlow.createEmployee(...)
 
-## Test execution
+---
 
-### Available npm scripts
+### API Layer
+- Client → HTTP request handling  
+- Service → response parsing & validation  
+- Tests → assertions  
 
-Quick commands from `package.json`:
+Example:
+const { response, body } = await service.createEmployee(data);
 
-```bash
-npm test                    # Run all tests
-npm run test:ui             # Run only UI tests (src/ui/tests)
-npm run test:api            # Run only API tests (src/api/tests)
-npm run test:debug          # Debug mode with step-by-step execution
-npm run test:ui:debug       # Debug UI tests with visible browser
-npm run test:headed         # Run all tests with visible browser
-npm run test:report         # Generate HTML report and open it
-npm run test:ci             # Run with JUnit reporter for CI/CD pipelines
-```
+---
 
-### Basic commands
+### Test Data Strategy
+- Static data → employee.data.ts  
+- Dynamic data → employee.factory.ts  
 
-- Run all tests:
-```bash
-npx playwright test
-```
+Example:
+const newEmployee = buildEmployee();
 
-- Run specific test file:
-```bash
-npx playwright test src/ui/tests/login.spec.ts
-```
+✔ Avoids collisions  
+✔ Enables parallel execution  
 
-- Run tests by pattern:
-```bash
-npx playwright test --grep "login"
-```
+---
 
-### Execution modes
+### Fixtures
 
-- **Debug mode** (step-by-step with browser open):
-```bash
-npx playwright test --debug
-```
+test('example', async ({ loggedInPage }) => {
 
-- **UI mode** (interactive test runner):
-```bash
-npx playwright test --ui
-```
+✔ Centralized authentication  
+✔ Reusable sessions  
+✔ Cleaner tests  
 
-- **Headed mode** (visible browser):
-```bash
-npx playwright test --headed
-```
+---
 
-- **Headless mode** (default, faster):
-```bash
-npx playwright test --headless
-```
+## 🧪 Test Coverage
 
-### Browser selection
+This framework currently includes **base test cases** that validate the core functionality of the application:
 
-- Run on specific browser:
-```bash
-npx playwright test --project=chromium
-npx playwright test --project=firefox
-npx playwright test --project=webkit
-```
+- User login (UI)
+- Employee creation via UI modal
+- Get employees API
+- Create employee API
 
-- Run on all browsers:
-```bash
-npx playwright test --project=all
-```
+These tests are designed as a **foundation** and can be easily extended.
 
-### Reporters
+### 🔥 Extensibility
 
-- **Line reporter** (concise output):
-```bash
-npx playwright test --reporter=line
-```
+The architecture allows adding more test cases without modifying existing logic:
 
-- **HTML report** (detailed with screenshots):
-```bash
-npx playwright test --reporter=html
-# Then open: npx playwright show-report
-```
+- Add new UI scenarios under `src/ui/tests`
+- Add new API validations under `src/api/tests`
+- Reuse existing pages, flows, and services
+- Extend test-data factories for new scenarios
 
-- **JSON report** (for CI/CD):
-```bash
-npx playwright test --reporter=json
-```
+Examples of additional test cases that can be implemented:
 
-- **JUnit report** (for CI/CD):
-```bash
-npx playwright test --reporter=junit
-```
+- Negative scenarios (invalid inputs, validation errors)
+- Edge cases (empty data, max limits)
+- Update and delete employee flows
+- API contract/schema validation
+- Role-based access testing
 
-### Advanced options
+✔ Designed for scalability  
+✔ Supports parallel execution  
+✔ Easy to maintain and extend  
 
-- **Parallel execution** (faster runs):
-```bash
-npx playwright test --workers=4
-```
+---
 
-- **Retry failed tests**:
-```bash
-npx playwright test --retries=2
-```
+## ⚙️ Setup
 
-- **Run with specific config**:
-```bash
-npx playwright test --config=playwright.ci.config.ts
-```
+1. Install dependencies  
+npm install  
 
-- **Dry run** (show what would run):
-```bash
-npx playwright test --dry-run
-```
+2. Install Playwright browsers  
+npx playwright install  
 
-### Environment-specific execution
+3. Configure environment  
 
-- **Development**:
-```bash
-npm run test:dev
-```
+Create .env file:
 
-- **Production**:
-```bash
-npm run test:prod
-```
+BASE_URL=https://your-app-url  
+LOGIN_URL=https://your-login-url  
+USER=your_user  
+PASSWORD=your_password  
 
-- **CI/CD**:
-```bash
-npm run test:ci
-```
+---
 
-### Test artifacts
+## ▶️ Running Tests
 
-After execution, check `test-results/` for:
-- Screenshots (on failure)
-- Videos (configurable in `playwright.config.ts`)
-- Error context files
-- HTML reports
+Run all tests  
+npm test  
 
-### Common workflows
+UI tests  
+npm run test:ui  
 
-- **Quick smoke test**:
-```bash
-npx playwright test --project=chromium --reporter=line
-```
+API tests  
+npm run test:api  
 
-- **Full regression with reports**:
-```bash
-npx playwright test --reporter=html --workers=3
-```
+Debug mode  
+npm run test:debug  
 
-- **Debug failing test**:
-```bash
-npx playwright test src/ui/tests/employee.add.spec.ts --debug --headed
-```
+UI Debug (headed)  
+npm run test:ui:debug  
 
-## Current behavior
+Headed mode  
+npm run test:headed  
 
-- `login.spec.ts` verifies login works.
-- `employee.add.spec.ts` opens modal, fills fields and validates employee row in table.
-- `employee.api.spec.ts` tests `GET /employees` and `POST /employees` through service + client layers.
+---
 
-## Notes
+## 📊 Reporting
 
-- The `EmployeePage` class uses dynamic fallback for Bootstrap modal show/hide when direct auto popup is flaky.
-- `isEmployeeInList` uses row index scanning, not just element text filters, for accurate verification.
+Playwright HTML Report  
+npx playwright show-report  
 
-## Troubleshooting
+---
 
-- If tests fail due missing env variables, confirm `.env` values and file path.
-- If modal tests fail in CI, the logic in `openAddEmployeeModal` may need updated selectors or wait conditions.
+### Allure Report
 
-## Contact
+Generate and open Allure report:  
+npm run allure:report  
 
-For changes, update the test flows in `src/ui/pages/employee.page.ts` and the fixtures in `src/fixtures/auth.fixture.ts`.
+Note: Allure requires Java (JDK 11+). Make sure JAVA_HOME is configured.
+
+---
+
+### Allure Features
+
+- Step-by-step execution logs  
+- Screenshots on failure  
+- Video & trace attachments  
+- Better debugging visibility  
+
+---
+
+## ⚙️ CI/CD Pipeline
+
+This project includes a GitHub Actions pipeline that:
+
+- Runs UI and API tests on every push  
+- Installs Playwright browsers  
+- Generates Allure and Playwright reports  
+- Uploads artifacts for analysis  
+
+Workflow file:  
+.github/workflows/playwright.yml  
+
+---
+
+## 🧪 Example Tests
+
+UI Test  
+test('User can add employee', async ({ loggedInPage }) => {
+  const employeePage = new EmployeePage(loggedInPage);
+  const newEmployee = buildEmployee();
+  await employeePage.addEmployee(...);
+});
+
+---
+
+API Test  
+test('Create employee API', async () => {
+  const service = new EmployeeService(client);
+  const newEmployee = buildEmployee();
+  const { response, body } = await service.createEmployee(newEmployee);
+  expect(response.status()).toBe(200);
+});
+
+---
+
+## 🧪 Best Practices Implemented
+
+✔ Separation of concerns (UI vs API)  
+✔ Scalable architecture (POM + Services)  
+✔ Reusable components and flows  
+✔ Data-driven testing  
+✔ Factory pattern for test data  
+✔ Custom fixtures for auth  
+✔ Reduced flaky tests  
+
+---
+
+## ⚠️ Future Improvements
+
+- Schema validation (AJV / Zod)  
+- Test tagging strategy (smoke/regression)  
+- Parallel execution tuning  
+- Integration with test management tools  
+- Allure history trends  
+
+---
+
+## 👨‍💻 Author
+
+Miguel Camarena  
+Senior QA Automation Engineer (17+ years experience)
+
+---
+
+## 🧨 TL;DR
+
+This project demonstrates:
+
+- Strong test automation architecture  
+- Real-world UI and API testing approach  
+- CI/CD integration  
+- Production-ready reporting  
+- Scalable foundation for expanding test coverage  

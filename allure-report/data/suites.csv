@@ -1,0 +1,5 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","5821","User can add employee via UI modal","","2026-04-02","passed","2026-04-02","","ui\tests\employee.add.spec.ts","",""
+"","894","Get employees API","","2026-04-02","passed","2026-04-02","","api\tests\employee.api.spec.ts","",""
+"","2002","User can login successfully","","2026-04-02","passed","2026-04-02","","ui\tests\login.spec.ts","",""
+"","270","Create employees API","","2026-04-02","passed","2026-04-02","","api\tests\employee.api.spec.ts","",""

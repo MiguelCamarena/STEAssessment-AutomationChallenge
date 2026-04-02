@@ -5,6 +5,13 @@ dotenv.config();
 
 export default defineConfig({
   testDir: './src',
+
+  reporter: [
+    ['list'],
+    ['html'],
+    ['allure-playwright']
+  ],
+
   use: {
     baseURL: process.env.BASE_URL,
     headless: true,
@@ -12,5 +19,4 @@ export default defineConfig({
     video: 'retain-on-failure',
     trace: 'on-first-retry',
   },
-  
 });
